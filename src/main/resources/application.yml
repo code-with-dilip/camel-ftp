@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  profiles: dev
+stream-file-route:
+  fromRoute: "stream:in?promptMessage=Enter something:"
+  toRoute: file:data/outbox
