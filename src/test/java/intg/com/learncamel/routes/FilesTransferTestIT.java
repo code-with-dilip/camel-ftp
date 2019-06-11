@@ -53,8 +53,6 @@ public class FilesTransferTestIT {
         assertEquals("Hello World Integration test", content);
 
 
-        assertTrue(notify.matchesMockWaitTime());
-
     }
 
 

@@ -30,10 +30,11 @@ public class FilesTransferRouteTest extends CamelTestSupport {
 
 
         template.sendBodyAndHeader("file://target/inbox", "Hello World",
-                Exchange.FILE_NAME, "hello.txt");
+                Exchange.FILE_NAME, "hello1.txt");
 
-        Thread.sleep(2000);
-        File target = new File("target/outbox/hello.txt");
+        Thread.sleep(5000);
+
+        File target = new File("target/outbox/hello1.txt");
         assertTrue("File not moved", target.exists());
         String content = context.getTypeConverter()
                 .convertTo(String.class, target);
