@@ -37,7 +37,18 @@ public class StreamToFileRouteTest extends CamelTestSupport {
         String expected="ABC";
         MockEndpoint mock = getMockEndpoint("mock:output");
         mock.expectedBodiesReceived(expected);
-        template.sendBody("direct:start", "ABC" );
+        template.sendBody("stub:stream:in?promptMessage=Enter something:", "ABC" );
+        assertMockEndpointsSatisfied();
+
+    }
+
+    @Test
+    public void testEndpoints1() throws InterruptedException {
+
+        String expected="DEF";
+        MockEndpoint mock = getMockEndpoint("mock:output");
+        mock.expectedBodiesReceived(expected);
+        template.sendBody("stub:stream:in?promptMessage=Enter something:", "DEF" );
         assertMockEndpointsSatisfied();
 
     }
@@ -45,7 +56,7 @@ public class StreamToFileRouteTest extends CamelTestSupport {
     public StreamToFileRouteConfigProperties buildMockStreamToFileConfig(){
 
         return StreamToFileRouteConfigProperties.builder()
-                .fromRoute("direct:start")
+                .fromRoute("stub:stream:in?promptMessage=Enter something:")
                 .toRoute("mock:output")
                 .build();
     }

@@ -52,10 +52,12 @@ dependencies {
 
     //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //camel-test
     testImplementation group: 'org.apache.camel', name: 'camel-test', version: '2.24.0'
+
+    //camel-test-spring
     testCompile group: 'org.apache.camel', name: 'camel-test-spring', version: '2.24.0'
 
 
-
-    //camel-test
 }
