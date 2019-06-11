@@ -58,21 +58,21 @@ public class MockRouteTest extends CamelTestSupport {
     @Test
     public void testQuote_UsingStub_recievedExchange() throws Exception {
         MockEndpoint mockEndpoint = getMockEndpoint("mock:quote");
-        mockEndpoint.expectedMessageCount(1);
+        mockEndpoint.expectedMessageCount(2); // mandatory, otherwise test will fail
 
         template.sendBodyAndHeader("stub:file://target/mock", "Hello World",
                 Exchange.FILE_NAME, "hello.txt");
 
-       /* template.sendBodyAndHeader("stub:file://target/mock", "Hello World1",
-                Exchange.FILE_NAME, "hello.txt");*/
+        template.sendBodyAndHeader("stub:file://target/mock", "Hello World1",
+                Exchange.FILE_NAME, "hello.txt");
 
-        assertMockEndpointsSatisfied();
+        assertMockEndpointsSatisfied(); // mandatory, otherwise test will fail
 
         List<Exchange> exchangeList = mockEndpoint.getReceivedExchanges();
         String body1 = exchangeList.get(0).getIn().getBody(String.class);
         assertEquals("Hello World", body1);
-        /*String body2 = exchangeList.get(1).getIn().getBody(String.class);
-        assertEquals("Hello World1", body2);*/
+        String body2 = exchangeList.get(1).getIn().getBody(String.class);
+        assertEquals("Hello World1", body2);
 
 
     }
