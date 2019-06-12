@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-@Component
+//@Component
 @Slf4j
 @NoArgsConstructor
 public class StreamToFileRoute extends RouteBuilder {

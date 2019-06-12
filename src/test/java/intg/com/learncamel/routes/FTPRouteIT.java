@@ -8,23 +8,28 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.NotifyBuilder;
 import org.apache.camel.test.spring.CamelSpringBootRunner;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static com.learncamel.constants.FTPConstants.FTP_INPUT_DIRECTORY;
+import static com.learncamel.constants.FTPConstants.FTP_OUTPUT_DIRECTORY;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
+
 @RunWith(CamelSpringBootRunner.class)
-@SpringBootTest( classes = {TestApplication.class},properties = { "camel.springboot.java-routes-include-pattern=com/learncamel/routes/FilesTransfer*"})
-public class FilesTransferTestIT {
+@SpringBootTest(classes = {CamelFtpApplication.class},properties = {"camel.springboot.java-routes-include-pattern=com/learncamel/routes/FTPRoute*"})
+public class FTPRouteIT {
 
     @Autowired
     ProducerTemplate template;
@@ -34,29 +39,33 @@ public class FilesTransferTestIT {
 
     @Before
     public void startCleanUp() throws IOException {
-        FileUtils.cleanDirectory(new File("target/inbox"));
-        FileUtils.deleteDirectory(new File("target/outbox"));
+        FileUtils.cleanDirectory(new File(FTP_INPUT_DIRECTORY));
+        FileUtils.deleteDirectory(new File(FTP_OUTPUT_DIRECTORY));
     }
 
     @Test
-    public void fileMove_Success() throws InterruptedException {
+    public void ftpFileTransferTest() throws InterruptedException {
 
-        NotifyBuilder notify = new NotifyBuilder(context).whenDone(1).create();
+        NotifyBuilder notify = new NotifyBuilder(context)
+                .wereSentTo("file://" + FTP_OUTPUT_DIRECTORY).whenCompleted(1)
+                .create();
 
-        template.sendBodyAndHeader("file://target/inbox", "Hello World Integration test",
-                Exchange.FILE_NAME, "hello.txt");
+
+        String fileName = "hello.txt";
+        String fileContent = "Hello World Integration test";
+
+        template.sendBodyAndHeader("file://" + FTP_INPUT_DIRECTORY, "Hello World Integration test",
+                Exchange.FILE_NAME, fileName);
 
         assertTrue(notify.matches(10, TimeUnit.SECONDS));
 
-        File target = new File("target/outbox/hello.txt");
+        File target = new File(FTP_OUTPUT_DIRECTORY + "/" + fileName);
         assertTrue("File not moved", target.exists());
         String content = context.getTypeConverter()
                 .convertTo(String.class, target);
         System.out.println("content : " + content);
-        assertEquals("Hello World Integration test", content);
-
+        assertEquals(fileContent, content);
 
     }
-
 
 }
