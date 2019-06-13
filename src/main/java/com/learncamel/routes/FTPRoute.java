@@ -17,9 +17,9 @@ public class FTPRoute extends RouteBuilder {
         //file://target/inbox
         from("file://"+FTP_INPUT_DIRECTORY)
                 .log("Read the Content  ${body}")
-                .to("ftp://rider:secret@localhost:21000/target/data/outbox");
+                .to("ftp://learncamel:secret@localhost:21000/target/data/outbox");
 
-        from("ftp://rider:secret@localhost:21000/target/data/outbox")
+        from("ftp://learncamel:secret@localhost:21000/target/data/outbox")
                 .log("Read Content from the FTP serverç is : ${body}")
         .to("file://"+FTP_OUTPUT_DIRECTORY);
 

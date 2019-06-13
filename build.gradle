@@ -58,7 +58,7 @@ dependencies {
     //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    //fake FTP Server
+    //In Memory FTP Server
     implementation group: 'org.apache.ftpserver', name: 'ftpserver-core', version: '1.0.0'
     implementation group: 'org.apache.ftpserver', name: 'ftplet-api', version: '1.0.0'
     implementation group: 'org.apache.mina', name: 'mina-core', version: '2.1.3'
