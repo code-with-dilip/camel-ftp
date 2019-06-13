@@ -97,10 +97,6 @@ FTPServerConfiguration
 -   Make sure you the **uses.properties** added to the classpath with the below values.
 
 ```
-ftpserver.user.admin
-ftpserver.user.admin.userpassword=admin
-ftpserver.user.admin.homedirectory=./
-ftpserver.user.admin.writepermission=true
 ftpserver.user.learncamel
 ftpserver.user.learncamel.userpassword=secret
 ftpserver.user.learncamel.homedirectory=./
