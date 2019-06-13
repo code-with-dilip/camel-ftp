@@ -12,7 +12,7 @@ public class FilesTransferRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         from("file://target/inbox")
-                .log("Transporting from data/input")
+                .log("Transporting from data/input ${body}")
                 .to("file://target/outbox");
 
     }

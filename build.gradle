@@ -39,6 +39,9 @@ dependencies {
     //camel-stream
     compile group: 'org.apache.camel', name: 'camel-stream', version: '2.24.0'
 
+    //camel-ftp
+    compile group: 'org.apache.camel', name: 'camel-ftp', version: '2.24.0'
+
     //jaxb
     compile group: 'javax.activation', name: 'javax.activation-api', version: '1.2.0'
 
@@ -48,10 +51,20 @@ dependencies {
     implementation "com.sun.xml.bind:jaxb-impl:2.2.11"
     implementation "javax.activation:activation:1.1.1"
     
+    //in memory db
     runtimeOnly 'com.h2database:h2'
+
 
     //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //In Memory FTP Server
+    implementation group: 'org.apache.ftpserver', name: 'ftpserver-core', version: '1.0.0'
+    implementation group: 'org.apache.ftpserver', name: 'ftplet-api', version: '1.0.0'
+    implementation group: 'org.apache.mina', name: 'mina-core', version: '2.1.3'
+
+
+
 
     //camel-test
     testImplementation group: 'org.apache.camel', name: 'camel-test', version: '2.24.0'
